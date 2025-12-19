@@ -244,6 +244,173 @@ a {
     color: var(--accent-teal);
 }
 
+/* Service Items - Services Page */
+.service-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 184, 77, 0.15);
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.service-item h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-teal);
+}
+
+/* Session Cards - Services Page */
+.session-card {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    position: relative;
+    height: 100%;
+}
+
+.session-card.featured {
+    border: 3px solid var(--primary-saffron);
+}
+
+.session-badge {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    background: var(--primary-saffron);
+    color: var(--white);
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.session-card h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-teal);
+}
+
+.session-price {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-saffron);
+    margin-bottom: 0.5rem;
+}
+
+.session-price span {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.session-duration {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.session-list {
+    list-style: none;
+    padding: 0;
+}
+
+.session-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.session-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-saffron);
+    font-weight: 700;
+}
+
+.session-process {
+    padding-left: 1.2rem;
+}
+
+.session-process li {
+    padding: 0.5rem 0;
+}
+
+.eligibility-note {
+    background: var(--secondary-blue);
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+/* Requirements List */
+.requirements-list {
+    font-size: 1.1rem;
+    line-height: 2;
+}
+
+.requirements-list li {
+    margin-bottom: 0.5rem;
+}
+
+/* Expect Cards */
+.expect-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.expect-card h4 {
+    color: var(--accent-teal);
+    margin-bottom: 1rem;
+}
+
+.expect-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.expect-card ul li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.expect-card ul li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-saffron);
+    font-weight: 700;
+}
+
+/* FAQ Items */
+.faq-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+.faq-item h5 {
+    color: var(--accent-teal);
+    margin-bottom: 1rem;
+}
+
 /* Value Cards - About Page */
 .value-card {
     background: var(--white);
@@ -575,12 +742,19 @@ a {
     .step-card,
     .benefit-card,
     .value-card,
-    .commitment-card {
+    .commitment-card,
+    .service-item,
+    .expect-card {
         margin-bottom: 1.5rem;
     }
     
-    .price {
+    .price,
+    .session-price {
         font-size: 2.5rem;
+    }
+    
+    .session-card {
+        padding: 2rem;
     }
 }
 
