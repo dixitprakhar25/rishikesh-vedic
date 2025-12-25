@@ -1,0 +1,314 @@
+/* ===================================
+   PANDIT PROFILE PAGE STYLES
+   =================================== */
+
+/* Selection Cards - Astrologers Page */
+.selection-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.selection-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 184, 77, 0.15);
+}
+
+.selection-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.selection-card h5 {
+    color: var(--accent-teal);
+    margin-bottom: 0.8rem;
+}
+
+/* Pandit Profile Page */
+.pandit-hero {
+    background: var(--bg-cream);
+}
+
+.pandit-profile-image img {
+    border: 5px solid var(--primary-saffron);
+}
+
+.pandit-name {
+    font-size: 3rem;
+    color: var(--accent-teal);
+    margin-bottom: 0.5rem;
+}
+
+.pandit-title {
+    font-size: 1.5rem;
+    color: var(--primary-saffron);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.pandit-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.meta-item {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.pandit-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-saffron);
+    font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Content Cards */
+.content-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.quick-facts-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.quick-facts-card h4 {
+    color: var(--accent-teal);
+    margin-bottom: 1.5rem;
+}
+
+.facts-list {
+    list-style: none;
+    padding: 0;
+}
+
+.facts-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.facts-list li:last-child {
+    border-bottom: none;
+}
+
+/* Education Cards */
+.education-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    height: 100%;
+}
+
+.education-card h4 {
+    color: var(--accent-teal);
+    margin-bottom: 1.5rem;
+}
+
+.education-list {
+    list-style: none;
+    padding: 0;
+}
+
+.education-list li {
+    padding: 1rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    border-bottom: 1px solid #eee;
+}
+
+.education-list li:last-child {
+    border-bottom: none;
+}
+
+.education-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-saffron);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* Certificate Gallery */
+.certificate-card {
+    text-align: center;
+}
+
+.certificate-card img {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.certificate-card img:hover {
+    transform: scale(1.05);
+}
+
+.certificate-label {
+    font-weight: 600;
+    color: var(--accent-teal);
+    text-align: center;
+}
+
+/* Expertise Cards */
+.expertise-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.expertise-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 184, 77, 0.15);
+}
+
+.expertise-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.expertise-card h4 {
+    color: var(--accent-teal);
+    margin-bottom: 1rem;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    left: 100px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary-saffron);
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.timeline-year {
+    width: 100px;
+    font-weight: 700;
+    color: var(--primary-saffron);
+    font-size: 1.1rem;
+    padding-right: 2rem;
+    text-align: right;
+}
+
+.timeline-content {
+    flex: 1;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    margin-left: 2rem;
+    position: relative;
+}
+
+.timeline-content:before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 25px;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-saffron);
+    border-radius: 50%;
+    border: 3px solid var(--white);
+}
+
+.timeline-content h5 {
+    color: var(--accent-teal);
+    margin-bottom: 0.8rem;
+}
+
+/* Pandit Card - Additional Styles */
+.pandit-card .training {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+}
+
+.pandit-card .brief {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Responsive - Pandit Pages */
+@media (max-width: 768px) {
+    .pandit-name {
+        font-size: 2rem;
+    }
+    
+    .pandit-title {
+        font-size: 1.2rem;
+    }
+    
+    .pandit-stats {
+        gap: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .timeline:before {
+        left: 20px;
+    }
+    
+    .timeline-year {
+        width: 80px;
+        font-size: 0.9rem;
+    }
+    
+    .timeline-content {
+        margin-left: 1rem;
+    }
+    
+    .quick-facts-card {
+        position: relative;
+        top: 0;
+        margin-top: 2rem;
+    }
+}
