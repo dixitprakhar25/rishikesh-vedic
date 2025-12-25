@@ -78,7 +78,6 @@ function rishikesh_vedic_setup() {
     add_theme_support( 'wp-block-styles' );
     add_theme_support( 'align-wide' );
     add_theme_support( 'editor-styles' );
-    add_editor_style( 'editor-style.css' );
 
     // Add support for responsive embeds
     add_theme_support( 'responsive-embeds' );
@@ -116,14 +115,17 @@ function rishikesh_vedic_scripts() {
     // Custom CSS from Customizer
     wp_add_inline_style( 'rishikesh-vedic-style', rishikesh_vedic_custom_css() );
 
-    // Main JavaScript
-    wp_enqueue_script( 
-        'rishikesh-vedic-script', 
-        get_template_directory_uri() . '/js/main.js', 
-        array( 'jquery' ), 
-        wp_get_theme()->get( 'Version' ), 
-        true 
-    );
+    // Main JavaScript - only if file exists
+    $js_file = get_template_directory() . '/js/main.js';
+    if ( file_exists( $js_file ) ) {
+        wp_enqueue_script( 
+            'rishikesh-vedic-script', 
+            get_template_directory_uri() . '/js/main.js', 
+            array( 'jquery' ), 
+            wp_get_theme()->get( 'Version' ), 
+            true 
+        );
+    }
 
     // Comment reply script
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -169,7 +171,7 @@ function rishikesh_vedic_custom_css() {
     $primary_color = get_theme_mod( 'primary_color', '#FFB84D' );
     $accent_color  = get_theme_mod( 'accent_color', '#2C7A7B' );
     $text_color    = get_theme_mod( 'text_color', '#2D3748' );
-    $bg_color      = get_theme_mod( 'background_color', '#FAF8F3' );
+    $bg_color      = get_theme_mod( 'background_color', 'FAF8F3' );
 
     $css = "
         :root {
@@ -184,51 +186,63 @@ function rishikesh_vedic_custom_css() {
 }
 
 /**
- * Customizer additions
+ * Customizer additions - Load only if file exists
  */
-require get_template_directory() . '/inc/customizer.php';
+$customizer_file = get_template_directory() . '/inc/customizer.php';
+if ( file_exists( $customizer_file ) ) {
+    require $customizer_file;
+}
 
 /**
- * Custom Post Types
+ * Custom Post Types - Load only if file exists
  */
-require get_template_directory() . '/inc/custom-post-types.php';
+$cpt_file = get_template_directory() . '/inc/custom-post-types.php';
+if ( file_exists( $cpt_file ) ) {
+    require $cpt_file;
+}
 
 /**
- * Custom template tags
+ * Custom template tags - Load only if file exists
  */
-require get_template_directory() . '/inc/template-tags.php';
+$template_tags_file = get_template_directory() . '/inc/template-tags.php';
+if ( file_exists( $template_tags_file ) ) {
+    require $template_tags_file;
+}
 
 /**
- * Elementor Support
+ * Elementor Support - Only if Elementor is active
  */
 function rishikesh_vedic_elementor_support() {
+    // Check if Elementor is active
+    if ( ! did_action( 'elementor/loaded' ) ) {
+        return;
+    }
+    
     // Add Elementor support
     add_post_type_support( 'page', 'elementor' );
     add_post_type_support( 'post', 'elementor' );
-    add_post_type_support( 'astrologer', 'elementor' );
+    
+    // Add support for custom post types if they exist
+    if ( post_type_exists( 'astrologer' ) ) {
+        add_post_type_support( 'astrologer', 'elementor' );
+    }
 }
-add_action( 'init', 'rishikesh_vedic_elementor_support' );
+add_action( 'init', 'rishikesh_vedic_elementor_support', 20 );
 
 /**
- * Register Elementor Locations
+ * Register Elementor Locations - Only if Elementor is active
  */
 function rishikesh_vedic_register_elementor_locations( $elementor_theme_manager ) {
+    if ( ! did_action( 'elementor/loaded' ) ) {
+        return;
+    }
+    
     $elementor_theme_manager->register_location( 'header' );
     $elementor_theme_manager->register_location( 'footer' );
     $elementor_theme_manager->register_location( 'single' );
     $elementor_theme_manager->register_location( 'archive' );
 }
 add_action( 'elementor/theme/register_locations', 'rishikesh_vedic_register_elementor_locations' );
-
-/**
- * Add custom Elementor widgets
- */
-function rishikesh_vedic_register_elementor_widgets() {
-    if ( did_action( 'elementor/loaded' ) ) {
-        require_once get_template_directory() . '/inc/elementor-widgets.php';
-    }
-}
-add_action( 'init', 'rishikesh_vedic_register_elementor_widgets' );
 
 /**
  * SEO Optimization - Add Schema.org markup
@@ -240,14 +254,14 @@ function rishikesh_vedic_schema_markup() {
             '@type'     => 'Organization',
             'name'      => get_bloginfo( 'name' ),
             'url'       => home_url(),
-            'logo'      => get_theme_mod( 'custom_logo' ) ? wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) : '',
             'description' => get_bloginfo( 'description' ),
-            'sameAs'    => array(
-                get_theme_mod( 'social_facebook', '' ),
-                get_theme_mod( 'social_instagram', '' ),
-                get_theme_mod( 'social_youtube', '' ),
-            ),
         );
+        
+        $logo = get_theme_mod( 'custom_logo' );
+        if ( $logo ) {
+            $schema['logo'] = wp_get_attachment_url( $logo );
+        }
+        
         echo '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>';
     }
 }
@@ -260,15 +274,18 @@ function rishikesh_vedic_og_tags() {
     if ( is_singular() ) {
         global $post;
         $og_title = get_the_title();
-        $og_description = get_the_excerpt();
-        $og_image = get_the_post_thumbnail_url( $post->ID, 'full' );
+        $og_description = has_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 20 );
         $og_url = get_permalink();
-
-        echo '<meta property="og:title" content="' . esc_attr( $og_title ) . '" />';
-        echo '<meta property="og:description" content="' . esc_attr( $og_description ) . '" />';
-        echo '<meta property="og:image" content="' . esc_url( $og_image ) . '" />';
-        echo '<meta property="og:url" content="' . esc_url( $og_url ) . '" />';
-        echo '<meta property="og:type" content="article" />';
+        
+        echo '<meta property="og:title" content="' . esc_attr( $og_title ) . '" />' . "\n";
+        echo '<meta property="og:description" content="' . esc_attr( $og_description ) . '" />' . "\n";
+        echo '<meta property="og:url" content="' . esc_url( $og_url ) . '" />' . "\n";
+        echo '<meta property="og:type" content="article" />' . "\n";
+        
+        if ( has_post_thumbnail() ) {
+            $og_image = get_the_post_thumbnail_url( $post->ID, 'full' );
+            echo '<meta property="og:image" content="' . esc_url( $og_image ) . '" />' . "\n";
+        }
     }
 }
 add_action( 'wp_head', 'rishikesh_vedic_og_tags' );
@@ -277,38 +294,6 @@ add_action( 'wp_head', 'rishikesh_vedic_og_tags' );
  * Optimize images for performance
  */
 add_filter( 'wp_lazy_loading_enabled', '__return_true' );
-
-/**
- * Add async/defer to scripts for better performance
- */
-function rishikesh_vedic_async_scripts( $tag, $handle ) {
-    $async_scripts = array( 'rishikesh-vedic-script' );
-    
-    if ( in_array( $handle, $async_scripts ) ) {
-        return str_replace( ' src', ' async src', $tag );
-    }
-    
-    return $tag;
-}
-add_filter( 'script_loader_tag', 'rishikesh_vedic_async_scripts', 10, 2 );
-
-/**
- * Add preconnect for Google Fonts
- */
-function rishikesh_vedic_resource_hints( $urls, $relation_type ) {
-    if ( 'preconnect' === $relation_type ) {
-        $urls[] = array(
-            'href' => 'https://fonts.googleapis.com',
-            'crossorigin',
-        );
-        $urls[] = array(
-            'href' => 'https://fonts.gstatic.com',
-            'crossorigin',
-        );
-    }
-    return $urls;
-}
-add_filter( 'wp_resource_hints', 'rishikesh_vedic_resource_hints', 10, 2 );
 
 /**
  * Custom excerpt length
@@ -336,8 +321,10 @@ function rishikesh_vedic_body_classes( $classes ) {
     }
 
     // Add class for Elementor pages
-    if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->db->is_built_with_elementor( get_the_ID() ) ) {
-        $classes[] = 'elementor-page';
+    if ( did_action( 'elementor/loaded' ) ) {
+        if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->db->is_built_with_elementor( get_the_ID() ) ) {
+            $classes[] = 'elementor-page';
+        }
     }
 
     return $classes;
@@ -348,37 +335,14 @@ add_filter( 'body_class', 'rishikesh_vedic_body_classes' );
  * Add theme support for WooCommerce (if needed for selling services)
  */
 function rishikesh_vedic_woocommerce_support() {
-    add_theme_support( 'woocommerce' );
-    add_theme_support( 'wc-product-gallery-zoom' );
-    add_theme_support( 'wc-product-gallery-lightbox' );
-    add_theme_support( 'wc-product-gallery-slider' );
+    if ( class_exists( 'WooCommerce' ) ) {
+        add_theme_support( 'woocommerce' );
+        add_theme_support( 'wc-product-gallery-zoom' );
+        add_theme_support( 'wc-product-gallery-lightbox' );
+        add_theme_support( 'wc-product-gallery-slider' );
+    }
 }
 add_action( 'after_setup_theme', 'rishikesh_vedic_woocommerce_support' );
-
-/**
- * Disable Gutenberg for specific post types (optional)
- */
-function rishikesh_vedic_disable_gutenberg( $use_block_editor, $post_type ) {
-    // Disable for astrologer post type if using Elementor
-    if ( 'astrologer' === $post_type ) {
-        return false;
-    }
-    return $use_block_editor;
-}
-add_filter( 'use_block_editor_for_post_type', 'rishikesh_vedic_disable_gutenberg', 10, 2 );
-
-/**
- * Add custom admin CSS
- */
-function rishikesh_vedic_admin_styles() {
-    wp_enqueue_style( 
-        'rishikesh-vedic-admin', 
-        get_template_directory_uri() . '/css/admin.css', 
-        array(), 
-        wp_get_theme()->get( 'Version' ) 
-    );
-}
-add_action( 'admin_enqueue_scripts', 'rishikesh_vedic_admin_styles' );
 
 /**
  * Security: Remove WordPress version from head
@@ -397,26 +361,113 @@ remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
 /**
- * Add custom dashboard widget
+ * Increase memory limit for Elementor
  */
-function rishikesh_vedic_dashboard_widget() {
-    wp_add_dashboard_widget(
-        'rishikesh_vedic_help',
-        'Rishikesh Vedic Theme Help',
-        'rishikesh_vedic_dashboard_widget_content'
-    );
-}
-add_action( 'wp_dashboard_setup', 'rishikesh_vedic_dashboard_widget' );
+@ini_set( 'memory_limit', '256M' );
 
-function rishikesh_vedic_dashboard_widget_content() {
-    echo '<p><strong>Welcome to Rishikesh Vedic Theme!</strong></p>';
-    echo '<p>Quick Links:</p>';
-    echo '<ul>';
-    echo '<li><a href="' . admin_url( 'customize.php' ) . '">Customize Theme</a></li>';
-    echo '<li><a href="' . admin_url( 'edit.php?post_type=astrologer' ) . '">Manage Astrologers</a></li>';
-    echo '<li><a href="' . admin_url( 'edit.php' ) . '">Manage Blog Posts</a></li>';
-    echo '<li><a href="' . admin_url( 'nav-menus.php' ) . '">Manage Menus</a></li>';
-    echo '</ul>';
-    echo '<p><a href="https://docs.rishikeshvedic.com" target="_blank">View Documentation</a></p>';
+/**
+ * Fix Elementor compatibility issues
+ */
+function rishikesh_vedic_elementor_compatibility() {
+    // Remove conflicting actions
+    remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
+    
+    // Ensure jQuery is loaded
+    if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
+        wp_enqueue_script( 'jquery' );
+    }
 }
+add_action( 'wp_enqueue_scripts', 'rishikesh_vedic_elementor_compatibility', 1 );
+
+/**
+ * Create default pages on theme activation
+ */
+function rishikesh_vedic_create_default_pages() {
+    // Check if pages already exist
+    $pages_created = get_option( 'rishikesh_vedic_pages_created' );
+    
+    if ( $pages_created ) {
+        return;
+    }
+    
+    // Default pages to create
+    $default_pages = array(
+        'Home' => array(
+            'post_title'   => 'Home',
+            'post_content' => '<!-- wp:paragraph --><p>Welcome to Rishikesh Vedic. Edit this page with Elementor to create your custom homepage.</p><!-- /wp:paragraph -->',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_name'    => 'home',
+        ),
+        'About Us' => array(
+            'post_title'   => 'About Us',
+            'post_content' => '<!-- wp:paragraph --><p>Learn about our authentic Vedic astrology services.</p><!-- /wp:paragraph -->',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_name'    => 'about',
+        ),
+        'Services' => array(
+            'post_title'   => 'Services',
+            'post_content' => '<!-- wp:paragraph --><p>Explore our Vedic astrology services and readings.</p><!-- /wp:paragraph -->',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_name'    => 'services',
+        ),
+        'Astrologers' => array(
+            'post_title'   => 'Our Astrologers',
+            'post_content' => '<!-- wp:paragraph --><p>Meet our experienced Vedic astrologers from Rishikesh.</p><!-- /wp:paragraph -->',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_name'    => 'astrologers',
+        ),
+        'Contact' => array(
+            'post_title'   => 'Contact Us',
+            'post_content' => '<!-- wp:paragraph --><p>Get in touch with us for any questions or to book a reading.</p><!-- /wp:paragraph -->',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_name'    => 'contact',
+        ),
+        'Booking' => array(
+            'post_title'   => 'Book Your Reading',
+            'post_content' => '<!-- wp:paragraph --><p>Book your personalized Vedic astrology reading.</p><!-- /wp:paragraph -->',
+            'post_status'  => 'publish',
+            'post_type'    => 'page',
+            'post_name'    => 'booking',
+        ),
+    );
+    
+    foreach ( $default_pages as $page_data ) {
+        // Check if page already exists
+        $page_check = get_page_by_path( $page_data['post_name'] );
+        
+        if ( ! $page_check ) {
+            // Create the page
+            $page_id = wp_insert_post( $page_data );
+            
+            // Set Home as front page
+            if ( $page_data['post_name'] === 'home' && $page_id ) {
+                update_option( 'show_on_front', 'page' );
+                update_option( 'page_on_front', $page_id );
+            }
+        }
+    }
+    
+    // Mark pages as created
+    update_option( 'rishikesh_vedic_pages_created', true );
+}
+add_action( 'after_switch_theme', 'rishikesh_vedic_create_default_pages' );
+
+/**
+ * Admin notice for Elementor installation
+ */
+function rishikesh_vedic_elementor_notice() {
+    if ( ! did_action( 'elementor/loaded' ) ) {
+        ?>
+        <div class="notice notice-warning is-dismissible">
+            <p><strong>Rishikesh Vedic Theme:</strong> For full drag & drop functionality, please install the <a href="<?php echo admin_url( 'plugin-install.php?s=elementor&tab=search&type=term' ); ?>">Elementor</a> plugin.</p>
+        </div>
+        <?php
+    }
+}
+add_action( 'admin_notices', 'rishikesh_vedic_elementor_notice' );
 ?>
