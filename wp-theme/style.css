@@ -1,0 +1,531 @@
+/*
+Theme Name: Rishikesh Vedic
+Theme URI: https://rishikeshvedic.com
+Author: Rishikesh Vedic Team
+Author URI: https://rishikeshvedic.com
+Description: Premium WordPress theme for Vedic astrology services with full Elementor support, drag-and-drop customization, and SEO optimization. Perfect for astrologers, spiritual consultants, and wellness professionals.
+Version: 1.0.0
+Requires at least: 5.8
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: rishikesh-vedic
+Tags: astrology, spiritual, wellness, elementor, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, theme-options, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned.
+*/
+
+/* ==========================================================================
+   TABLE OF CONTENTS
+   ==========================================================================
+   1. CSS Variables (Customizable via WordPress Customizer)
+   2. Reset & Base Styles
+   3. Typography
+   4. Layout & Grid
+   5. Navigation
+   6. Buttons
+   7. Forms
+   8. Cards & Components
+   9. Sections
+   10. Footer
+   11. Responsive Design
+   12. Elementor Compatibility
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CSS VARIABLES - Customizable via WordPress Customizer
+   ========================================================================== */
+:root {
+    /* Primary Colors */
+    --primary-color: #FFB84D;
+    --primary-dark: #F5A623;
+    --secondary-color: #E8F4F8;
+    --accent-color: #2C7A7B;
+    
+    /* Neutral Colors */
+    --bg-cream: #FAF8F3;
+    --text-dark: #2D3748;
+    --text-light: #666666;
+    --white: #FFFFFF;
+    --border-color: #E0E0E0;
+    
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Open Sans', sans-serif;
+    --font-size-base: 16px;
+    --line-height-base: 1.6;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 15px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
+    --shadow-md: 0 5px 20px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 30px rgba(255, 184, 77, 0.2);
+    
+    /* Transitions */
+    --transition-base: all 0.3s ease;
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+    background-color: var(--bg-cream);
+    line-height: var(--line-height-base);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* WordPress Core Alignment Classes */
+.alignnone {
+    margin: 5px 20px 20px 0;
+}
+
+.aligncenter,
+div.aligncenter {
+    display: block;
+    margin: 5px auto 5px auto;
+}
+
+.alignright {
+    float: right;
+    margin: 5px 0 20px 20px;
+}
+
+.alignleft {
+    float: left;
+    margin: 5px 20px 20px 0;
+}
+
+.wp-caption {
+    max-width: 100%;
+}
+
+.wp-caption-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-base);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+.lead {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+/* ==========================================================================
+   4. LAYOUT & GRID
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0 15px;
+}
+
+.section {
+    padding: var(--spacing-xl) 0;
+}
+
+.section-light {
+    background-color: var(--white);
+}
+
+.section-cream {
+    background-color: var(--bg-cream);
+}
+
+/* ==========================================================================
+   5. NAVIGATION
+   ========================================================================== */
+.site-header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.site-branding {
+    display: flex;
+    align-items: center;
+}
+
+.site-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.site-title a {
+    color: var(--primary-color);
+}
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-navigation ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.main-navigation a {
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: var(--transition-base);
+}
+
+.main-navigation a:hover,
+.main-navigation .current-menu-item a {
+    color: var(--primary-color);
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+
+/* ==========================================================================
+   6. BUTTONS
+   ========================================================================== */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-align: center;
+    transition: var(--transition-base);
+    cursor: pointer;
+    border: none;
+    font-family: var(--font-body);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--white);
+}
+
+.btn-outline {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-lg {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   7. FORMS
+   ========================================================================== */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: var(--transition-base);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 184, 77, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* ==========================================================================
+   8. CARDS & COMPONENTS
+   ========================================================================== */
+.card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-md);
+    transition: var(--transition-base);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-image {
+    width: 100%;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-title {
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ==========================================================================
+   9. SECTIONS
+   ========================================================================== */
+.hero-section {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, var(--accent-color) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    color: var(--white);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+/* ==========================================================================
+   10. FOOTER
+   ========================================================================== */
+.site-footer {
+    background-color: var(--text-dark);
+    color: var(--white);
+    padding: var(--spacing-lg) 0;
+}
+
+.site-footer h5,
+.site-footer h6 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.site-footer a {
+    color: var(--white);
+    opacity: 0.8;
+}
+
+.site-footer a:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   11. RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .main-navigation ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 1rem;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .main-navigation ul.active {
+        display: flex;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* ==========================================================================
+   12. ELEMENTOR COMPATIBILITY
+   ========================================================================== */
+/* Ensure Elementor sections work properly */
+.elementor-section {
+    position: relative;
+}
+
+.elementor-widget-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Custom Elementor Widget Styles */
+.elementor-widget-heading .elementor-heading-title {
+    font-family: var(--font-heading);
+}
+
+.elementor-widget-text-editor {
+    font-family: var(--font-body);
+}
+
+/* Elementor Button Widget */
+.elementor-button {
+    font-family: var(--font-body);
+}
+
+/* WordPress Block Editor Compatibility */
+.wp-block-button__link {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 30px;
+    border-radius: var(--radius-sm);
+}
+
+.wp-block-button__link:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+
+.pt-1 { padding-top: var(--spacing-xs); }
+.pt-2 { padding-top: var(--spacing-sm); }
+.pt-3 { padding-top: var(--spacing-md); }
+.pt-4 { padding-top: var(--spacing-lg); }
+
+.pb-1 { padding-bottom: var(--spacing-xs); }
+.pb-2 { padding-bottom: var(--spacing-sm); }
+.pb-3 { padding-bottom: var(--spacing-md); }
+.pb-4 { padding-bottom: var(--spacing-lg); }
