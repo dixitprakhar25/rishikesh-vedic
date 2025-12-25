@@ -1,0 +1,207 @@
+/* ===================================
+   CONTACT & BOOKING PAGE STYLES
+   =================================== */
+
+/* Contact Method Cards */
+.contact-method-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.contact-method-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(255, 184, 77, 0.2);
+}
+
+.contact-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.contact-method-card h4 {
+    color: var(--accent-teal);
+    margin-bottom: 1rem;
+}
+
+.response-time {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Contact Form Card */
+.contact-form-card {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-charcoal);
+    margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-saffron);
+    box-shadow: 0 0 0 0.2rem rgba(255, 184, 77, 0.25);
+}
+
+/* Location Details */
+.location-details p {
+    margin-bottom: 0.5rem;
+}
+
+/* Booking Form Card */
+.booking-form-card {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.booking-step {
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 2rem;
+}
+
+.booking-step:last-child {
+    border-bottom: none;
+}
+
+.step-heading {
+    color: var(--accent-teal);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+/* Service Option Cards */
+.service-option {
+    position: relative;
+}
+
+.service-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.service-label {
+    display: block;
+    background: var(--white);
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.service-option input[type="radio"]:checked + .service-label {
+    border-color: var(--primary-saffron);
+    background: rgba(255, 184, 77, 0.05);
+}
+
+.service-label:hover {
+    border-color: var(--primary-saffron);
+    transform: translateY(-5px);
+}
+
+.service-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--accent-teal);
+    margin-bottom: 0.5rem;
+}
+
+.service-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-saffron);
+    margin-bottom: 0.3rem;
+}
+
+.service-duration {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.service-desc {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* Booking Sidebar */
+.booking-sidebar {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.booking-sidebar h5 {
+    color: var(--accent-teal);
+    margin-bottom: 1rem;
+}
+
+.next-steps-list,
+.policy-list {
+    list-style: none;
+    padding: 0;
+}
+
+.next-steps-list li,
+.policy-list li {
+    padding: 0.5rem 0;
+    color: #666;
+}
+
+/* Trust Badges Small */
+.trust-badge-small {
+    padding: 1.5rem;
+}
+
+.badge-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.trust-badge-small p {
+    margin: 0;
+    font-weight: 600;
+    color: var(--accent-teal);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-form-card,
+    .booking-form-card {
+        padding: 2rem;
+    }
+    
+    .booking-sidebar {
+        position: relative;
+        top: 0;
+        margin-top: 2rem;
+    }
+    
+    .service-price {
+        font-size: 1.5rem;
+    }
+}
